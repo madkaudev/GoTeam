@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <!-- Set the favicon image and title -->
+        <title>Find-a-Team</title>
+        <link rel="icon" href="" type="image/x-icon"/> <!-- Missing location -->
+        <!-- Author and description -->
+        <meta name="author" content="Mad Kau"/>
+        <meta name="description" content="A website that find the nearest sports team to you."/>
+        <!-- Basic Metadata for Open Graph Protocol -->
+        <meta property="og:title" content="Find-a-Team"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:url" content="https://www.find-a-team.farawaygiant.com"/> <!-- Doesn't exist yet -->
+        <meta property="og:image" content=""/> <!-- Missing location -->
+        <!-- Character set and viewport -->
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width"/>
+        <!-- Load styles and scripts -->
+        <!--
+        <link rel="stylesheet" href=""/>
+        -->
+        <script src="scripts/locatePosition.js" defer></script>
+        <script src="scripts/locateTeam.js" defer></script>
+    </head>
+    <body>
+        <header>
+            <h1>Search for your nearest NFL team!</h1>
+            <h3>We use your location just to compare it with stadium distances. Pinkie promise.</h3>
+        </header>
+        <main>
+            <button type="button" id="get-location">Get your current lattitude and longitude</button>
+            <button type="button" id="get-team" disabled>Get your closest NFl team</button>
+            <div id="location-output"></div>
+            <div id="team-output"></div>
+        </main>
+        <footer>
+
+        </footer>
+    </body>
+</html>
