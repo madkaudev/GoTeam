@@ -10,6 +10,6 @@ Version 1.0.0 (Current Version)
 <br>
 Version 0.0.0
 <br>
-- Currently is bare-bones HTML and Javascript.
+- Currently is bare-bones HTML and Javascript. <br>
 - Only support for NFL
 <br>
