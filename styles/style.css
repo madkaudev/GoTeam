@@ -1,0 +1,23 @@
+@font-face {
+    font-family: "Work Sans";
+    src: url("../fonts/Work_Sans/WorkSans-VariableFont_wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+}
+body {
+    font-family: "Work Sans", sans-serif;
+}
+header > h1, header > h3, #location-output {
+    text-align: center;
+}
+#buttons {
+    width: fit-content;
+    margin-inline: auto;
+    margin-bottom: 2%;
+    font-family: inherit;
+}
+button, select {
+    border-width: 2px;
+    border-color: black;
+    border-radius: 5px;
+}

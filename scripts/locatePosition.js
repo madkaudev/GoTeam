@@ -1,45 +1,69 @@
-// On-start settings
-document.addEventListener("DOMContentLoaded", (event) => {
-    // Disable the get-team button upon launch
-    document.getElementById("get-team").setAttribute("disabled", "true");
-  });
-
-// Global variables that represent the user's coordinates
-var latitude = null;
-var longitude = null;
-
-// Modify location-output div with coordinates
-function displayCoordinates(latitude, longitude) {
-    const divLocation = document.getElementById("location-output");
-    divLocation.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+// Update global coordinates and show them to user.
+function updateCoordinates(posLat, posLong) {
+    // Update the global coordinates
+    latitude = posLat;
+    longitude = posLong;
+    // Write coordinates to console
+    console.log(`Latitude: ${posLat}, Longitude: ${posLong}`);
 }
-// Call displayCoordinates(...) and update latitude + longitude.
-// Additionally, enable the get-team button.
+// Update map with new coordinates. Reset all markers and items first.
+function updateMap(zoom) {
+    // Remove all markers and polygons from the map
+    markers = [];
+    map.eachLayer(function(layer) {
+        if (layer instanceof L.Marker || layer instanceof L.Polygon) {
+            map.removeLayer(layer);
+        }
+    });
+    // Create a marker on the user's location
+    var userMarker = L.marker([latitude, longitude]).addTo(map);
+    userMarker.bindPopup(`Your location: <br> ${latitude}, ${longitude}`,
+        { closeOnClick: false }).openPopup();
+    markers.push(userMarker);
+    // Focus map
+    map.setView([latitude, longitude], zoom);
+}
+// Call updateCoordinates(...). Additionally, enable the get-team button and update the map.
 function success(position) {
     console.log("getCurrentPosition() was successful.")
-    displayCoordinates(position.coords.latitude, position.coords.longitude);
-    latitude = position.coords.latitude;
-    longitude = position.coords.longitude;
-    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-    // Enable button
+    // Set error count back to 0.
+    getCurrentPositionErrorCount = 0;
+    // Reset location-output div
+    document.getElementById("location-output").textContent = "";
+    updateCoordinates(position.coords.latitude, position.coords.longitude);
+    // Enable buttons
+    document.getElementById("get-location").removeAttribute("disabled");
     document.getElementById("get-team").removeAttribute("disabled");
-}
-// Just write to console the error code and message if the browser can't get the user's position
-function error(err) {
-    console.warn(`(ERROR ${err.code}): ${err.message}`);
-    const divLocation = document.getElementById("location-output");
-    divLocation.textContent = `(Couldn't update) Latitude: ${latitude}, Longitude: ${longitude}`;
+    document.getElementById("league-select").removeAttribute("disabled");
+    document.getElementById("reset-button").removeAttribute("disabled");
+    // Update map with user's position
+    updateMap(ZoomLevel);
+    // Set boolean to false
+    isTeamOnMap = false;
 }
 
-// Don't try to pull from cache, spend 10s on getting location, and get a low accurate location
-// for purposes of saving time. Being in the right town is good enough.
-const options = {
-    maximumAge: 0,
-    timeout: 10000,
-    enableHighAccuracy: false,
-};
+// Handle error by throwing warning to console and printing an error message on screen.
+function error(err) {
+    console.warn(`(ERROR ${err.code}): ${err.message}`);
+    getCurrentPositionErrorCount += 1;
+    const divLocation = document.getElementById("location-output");
+    divLocation.textContent = `(Couldn't update position: ${getCurrentPositionErrorCount} time(s).)`;
+    // Disable button
+    document.getElementById("get-team").setAttribute("disabled", true);
+    // Enable buttons
+    document.getElementById("get-location").removeAttribute("disabled");
+    document.getElementById("league-select").removeAttribute("disabled");
+    document.getElementById("reset-button").removeAttribute("disabled");
+}
+
 // On press of button, append page with user's coordinates and update longitude + latitude variables.
 document.getElementById("get-location").addEventListener("click", () => {
     console.log("Get-location button pressed.");
+    // Disable buttons while Geolocation API works
+    document.getElementById("get-location").setAttribute("disabled", true);
+    document.getElementById("get-team").setAttribute("disabled", true);
+    document.getElementById("league-select").setAttribute("disabled", true);
+    document.getElementById("reset-button").setAttribute("disabled", true);
+    // Obtain user's current position
     navigator.geolocation.getCurrentPosition(success, error, options);
 });

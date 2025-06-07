@@ -1,0 +1,11 @@
+#map { 
+    height: 360px;
+    width: 720px;
+    margin-inline: auto;
+}
+.leaflet-popup-content {
+    text-align: center;
+}
+.leaflet-control, .leaflet-popup-content, .leaflet-tooltip, .leaflet-control-attribution {
+    font-family: "Work Sans", sans-serif;
+}

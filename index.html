@@ -2,36 +2,56 @@
 <html lang="en-US">
     <head>
         <!-- Set the favicon image and title -->
-        <title>Find-a-Team</title>
+        <title>GoTeam</title>
         <link rel="icon" href="" type="image/x-icon"/> <!-- Missing location -->
         <!-- Author and description -->
         <meta name="author" content="Mad Kau"/>
         <meta name="description" content="A website that find the nearest sports team to you."/>
         <!-- Basic Metadata for Open Graph Protocol -->
-        <meta property="og:title" content="Find-a-Team"/>
+        <meta property="og:title" content="GoTeam"/>
         <meta property="og:type" content="website"/>
-        <meta property="og:url" content="https://www.find-a-team.farawaygiant.com"/> <!-- Doesn't exist yet -->
+        <meta property="og:url" content="https://www.GoTeam.farawaygiant.com"/> <!-- Doesn't exist yet -->
         <meta property="og:image" content=""/> <!-- Missing location -->
         <!-- Character set and viewport -->
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width"/>
         <!-- Load styles and scripts -->
-        <!--
-        <link rel="stylesheet" href=""/>
-        -->
+        <link rel="stylesheet" href="styles/map.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+            integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+            crossorigin=""/>
+        <link rel="stylesheet" href="styles/style.css"/>
+        <!-- Make sure you put this AFTER Leaflet's CSS -->
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+        <script src="scripts/teams.js" defer></script>
+        <script src="scripts/global.js" defer></script>
         <script src="scripts/locatePosition.js" defer></script>
         <script src="scripts/locateTeam.js" defer></script>
+        <script src="scripts/map.js" defer></script>
     </head>
     <body>
         <header>
             <h1>Search for your nearest NFL team!</h1>
-            <h3>We use your location just to compare it with stadium distances. Pinkie promise.</h3>
+            <h3>(We use your location just to compare it with stadium distances. Pinkie promise.)</h3>
         </header>
         <main>
-            <button type="button" id="get-location">Get your current lattitude and longitude</button>
-            <button type="button" id="get-team" disabled>Get your closest NFl team</button>
+            <div id="buttons">
+                <button type="button" id="get-location">Get your current location</button>
+                <button type="button" id="get-team" disabled>Get your closest team</button>
+                <select name="leagues" id="league-select">
+                    <option value="MLB">MLB</option>
+                    <option value="MLS">MLS</option>
+                    <option value="NBA">NBA</option>
+                    <option value="NFL">NFL</option>
+                    <option value="NHL">NHL</option>
+                    <option value="NWSL">NWSL</option>
+                    <option value="WNBA">WNBA</option>
+                </select>
+            </div>
             <div id="location-output"></div>
-            <div id="team-output"></div>
+            <div id="map"></div>
         </main>
         <footer>
 
