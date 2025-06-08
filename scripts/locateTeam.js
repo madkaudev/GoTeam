@@ -49,7 +49,6 @@ function findClosestTeam(teams, latitude, longitude) {
     }
 }
 // Add a marker for the nearest team.
-// TODO: Add multiple teams to a popup if they exist, and add city to popup.
 function addTeamToMap() {
     if (isTeamOnMap === false) {
         for (let [key, value] of closestTeam.entries()) {
